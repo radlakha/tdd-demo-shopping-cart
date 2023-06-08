@@ -8,4 +8,10 @@ public class Offer {
                 return new FIRST2OFF50Offer();
         return null;
     } 
+
+    // write a function to return the name of the offer
+    // this function will be implemented in all derived classes
+    public String getOfferName() {
+        return "";
+    }
 }
