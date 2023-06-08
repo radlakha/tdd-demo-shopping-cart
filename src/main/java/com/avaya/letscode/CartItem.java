@@ -3,9 +3,9 @@ package com.avaya.letscode;
 public class CartItem {
     private final Product product;
     private int quantity;
-    private final String offer;
+    private final Offer offer;
 
-    public CartItem(Product product, int quantity, String offer) {
+    public CartItem(Product product, int quantity, Offer offer) {
         this.product = product;
         this.quantity = quantity;
         this.offer = offer;

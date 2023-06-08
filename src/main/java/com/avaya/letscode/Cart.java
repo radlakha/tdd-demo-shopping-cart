@@ -37,7 +37,7 @@ public class Cart {
     public void AddItem(Product product, int quantity, String offer) {
         this.quantity += quantity;
 
-        CartItem cartItem = new CartItem(product, quantity, offer);
+        CartItem cartItem = new CartItem(product, quantity, Offer.create(offer));
         this.items.merge(product, cartItem, CartItem::merge);
 
 }
