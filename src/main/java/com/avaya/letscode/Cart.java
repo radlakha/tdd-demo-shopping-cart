@@ -28,17 +28,17 @@ public class Cart {
         return quantity;
     }
 
-    public double getValue() {
+    public double getCartValue() {
         // if cart has no offer, return the sum of all items in the cart
         if (this.cartOffers.isEmpty()) {
-            return this.items.values().stream().mapToInt(CartItem::getValue).sum();
+            return this.items.values().stream().mapToInt(CartItem::getCartItemValue).sum();
         }
         else {
             double discount = 0;
             for (Map.Entry<String, Offer> entry : this.cartOffers.entrySet()) {
                 discount += entry.getValue().getDiscount(this);
             }
-            double cartValue = this.items.values().stream().mapToInt(CartItem::getValue).sum();
+            double cartValue = this.items.values().stream().mapToInt(CartItem::getCartItemValue).sum();
             return cartValue - cartValue*discount/100;
         }
     }

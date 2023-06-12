@@ -10,7 +10,7 @@ public class CART5OFFOffer extends Offer {
         // do not use cart.getValue() here as it will cause infinite loop
 
         // if cart value is greater than 1000, return 5% discount
-        double cartValue = cart.items.values().stream().mapToInt(CartItem::getValue).sum();
+        double cartValue = cart.items.values().stream().mapToInt(CartItem::getCartItemValue).sum();
         return (cartValue >= 1000) ? 5 : 0;
     }
 }

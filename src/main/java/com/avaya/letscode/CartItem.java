@@ -20,19 +20,16 @@ public class CartItem {
         return this.quantity;
     }
 
-    public int getValue() {
+    public int getCartItemValue() {
         
         // if item has no offer, return the product unit price * quantity
         if (this.offer == null) {
             return this.product.getUnitPrice()*this.getQuantity();
         }
+        
+        // if item has offer, return the item total based on offer
+        return (this.offer).getItemTotalWithOffer(this.product, this.quantity);
 
-        if (this.offer.getOfferName().equals("BUY2GET1")) {
-            return (this.quantity - this.quantity/3)*product.getUnitPrice();
-        } else if (this.offer.getOfferName().equals("FIRST2OFF50")) {
-            return (this.quantity > 1) ? (this.quantity-1)*this.product.getUnitPrice() : this.quantity*this.product.getUnitPrice();
-        }
-
-        return this.product.getUnitPrice()*this.getQuantity();
     }
+
 }
