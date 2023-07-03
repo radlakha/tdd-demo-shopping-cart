@@ -35,7 +35,7 @@ public class Cart {
 
         double cartValue = this.items.values().stream().mapToInt(CartItem::getCartItemValue).sum();
         //stream offer list and apply each offer to the cart
-        double discount = this.cartOffers.stream().mapToDouble(offer -> offer.getDiscount(this)).sum();
+        double discount = this.cartOffers.stream().mapToDouble(offer -> offer.getDiscountPercentage(this)).sum();
         return cartValue - cartValue*discount/100;
         
     }

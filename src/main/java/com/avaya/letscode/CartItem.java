@@ -17,7 +17,13 @@ public class CartItem {
     }
 
     public int getQuantity() {
-        return this.quantity;
+        // if item has no offer, return the quantity
+        if (this.offer == null) {
+            return this.quantity;
+        }
+
+        // if item has offer, return the quantity based on offer
+        return (this.offer).getAdjustedQuantity(this.product, this.quantity);
     }
 
     public int getCartItemValue() {
@@ -28,7 +34,7 @@ public class CartItem {
         }
         
         // if item has offer, return the item total based on offer
-        return (this.offer).getItemTotalWithOffer(this.product, this.quantity);
+        return (this.offer).getDiscountedValue(this.product, this.quantity);
 
     }
 
