@@ -1,6 +1,8 @@
 package com.avaya.letscode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Cart {
@@ -8,7 +10,8 @@ public class Cart {
     Map<Product, CartItem> items;       
     
     //List of offers applicable to the cart
-    Map<String, Offer> cartOffers;
+    // Map<String, Offer> cartOffers;
+    List<Offer> cartOffers;
 
 
     int quantity = 0;       //Total number of items in cart
@@ -18,7 +21,7 @@ public class Cart {
 
     Cart(){
         this.items = new HashMap<>();
-        this.cartOffers = new HashMap<>();
+        this.cartOffers = new ArrayList<>();
     }
     public void AddItem(Product product) {
         this.AddItem(product, 1);
@@ -29,18 +32,12 @@ public class Cart {
     }
 
     public double getCartValue() {
-        // if cart has no offer, return the sum of all items in the cart
-        if (this.cartOffers.isEmpty()) {
-            return this.items.values().stream().mapToInt(CartItem::getCartItemValue).sum();
-        }
-        else {
-            double discount = 0;
-            for (Map.Entry<String, Offer> entry : this.cartOffers.entrySet()) {
-                discount += entry.getValue().getDiscount(this);
-            }
-            double cartValue = this.items.values().stream().mapToInt(CartItem::getCartItemValue).sum();
-            return cartValue - cartValue*discount/100;
-        }
+
+        double cartValue = this.items.values().stream().mapToInt(CartItem::getCartItemValue).sum();
+        //stream offer list and apply each offer to the cart
+        double discount = this.cartOffers.stream().mapToDouble(offer -> offer.getDiscount(this)).sum();
+        return cartValue - cartValue*discount/100;
+        
     }
 
     public void AddItem(Product product, int quantity) {
@@ -59,6 +56,6 @@ public class Cart {
     }
 
     public void AddOffer(String offer) {
-        this.cartOffers.put(offer, Offer.create(offer));
+        this.cartOffers.add(Offer.create(offer));
     }
 }
