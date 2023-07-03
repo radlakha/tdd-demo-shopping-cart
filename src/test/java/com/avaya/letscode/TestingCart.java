@@ -67,7 +67,7 @@ public class TestingCart {
         testCart.AddItem(doveSoap, 2, "BUY2GET1");
         Product patanjaliSoap = new Product("Patanjali Soap", 25);
         testCart.AddItem(patanjaliSoap, 2);
-        Assert.assertEquals(5,testCart.getQuantity(doveSoap));
+        Assert.assertEquals(6,testCart.getQuantity(doveSoap));
         Assert.assertEquals(2,testCart.getQuantity(patanjaliSoap));
         Assert.assertEquals(250, testCart.getCartValue(), 0.0);
     }
@@ -80,7 +80,7 @@ public class TestingCart {
         Product patanjaliSoap = new Product("Patanjali Soap", 25);
         testCart.AddItem(patanjaliSoap, 2);
         Assert.assertEquals(3,testCart.getQuantity(doveSoapNew));
-        Assert.assertEquals(2,testCart.getQuantity(doveSoapOld));
+        Assert.assertEquals(3,testCart.getQuantity(doveSoapOld));
         Assert.assertEquals(2,testCart.getQuantity(patanjaliSoap));
         Assert.assertEquals(230, testCart.getCartValue(), 0.0);
     }
@@ -107,6 +107,22 @@ public class TestingCart {
         Assert.assertEquals(1021.25, testCart.getCartValue(),0);
     }
 
+    @Test
+    // Modify the quantity of an Product in the cart in response to an offer being applied
+    // GIVEN I have an empty cart
+    // WHEN I add 5 Dove Soaps with “Buy 2 Get 1 Free Offer” of Unit price INR 50 AND 5 Patanjali Soaps with “50% Discount On First 2 Offer” of Unit price 25 to the cart
+    // THEN my cart shows quantity 6 for Dove Soap AND quantity 5 for Patanjali Soap with total cart value INR 300
+    public void testModifyQuantityOfProductInCart(){
+        Product doveSoap = new Product("Dove Soap", 50);
+        testCart.AddItem(doveSoap, 5, "BUY2GET1");
+        Product patanjaliSoap = new Product("Patanjali Soap", 25);
+        testCart.AddItem(patanjaliSoap, 5,"FIRST2OFF50");
+        Assert.assertEquals(6,testCart.getQuantity(doveSoap));
+        Assert.assertEquals(5,testCart.getQuantity(patanjaliSoap));
+        Assert.assertEquals(300, testCart.getCartValue(),0);
+    }
+
+    
     @After
     public void teardown(){
         testCart = null;
