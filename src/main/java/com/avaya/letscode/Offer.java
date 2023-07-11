@@ -20,7 +20,7 @@ public interface Offer {
 
     // For Cart level offers return discount applicable for the offer. 
     // This function will be implemented in all derived classes for cart level offers
-    public default double getDiscountPercentage(Cart cart) {
+    public default double getDiscountedValue(Cart cart) {
         // passsing the cart is to help offer to calculate the discount based on cart value and items in the cart
         // do not use cart.getValue() here as it will cause infinite loop
 
@@ -29,12 +29,12 @@ public interface Offer {
 
     // For item level offers calculate item total based on offer.
     // This function will be implemented in all derived classes
-    public default int getDiscountedValue(Product product, int quantity) {
-        return product.getUnitPrice() * quantity;
+    public default int getDiscountedValue(CartItem cartItem) {
+        return cartItem.getProduct().getUnitPrice() * cartItem.getQuantityBeforeOffer();
     }
 
 
-    public default int getAdjustedQuantity(Product product, int quantity) {
-        return quantity;
+    public default int getAdjustedQuantity(CartItem cartItem) {
+        return cartItem.getQuantityBeforeOffer();
     }
 }

@@ -7,15 +7,15 @@ public class BUY2GET1Offer implements Offer {
     }
 
     @Override
-    public int getDiscountedValue(Product product, int quantity) {
-        return (quantity - quantity/3)*product.getUnitPrice();
+    public int getDiscountedValue(CartItem cartItem) {
+        return (cartItem.getQuantityBeforeOffer() - cartItem.getQuantityBeforeOffer()/3)*cartItem.getProduct().getUnitPrice();
     }
 
 
     @Override
-    public int getAdjustedQuantity(Product product, int quantity) {
+    public int getAdjustedQuantity(CartItem cartItem) {
         // if quantity is greater than 3, return the quantity based on offer
         // if quantity mod 3 is 2 return quantity + 1
-        return quantity + (quantity % 3 == 2 ? 1 : 0);
+        return cartItem.getQuantityBeforeOffer() + (cartItem.getQuantityBeforeOffer() % 3 == 2 ? 1 : 0);
     }
 }

@@ -7,8 +7,8 @@ public class FIRST2OFF50Offer implements Offer {
     }
     
     @Override
-    public int getDiscountedValue(Product product, int quantity) {
-        return (quantity > 1) ? (quantity-1)*product.getUnitPrice() : quantity*product.getUnitPrice();
+    public int getDiscountedValue(CartItem cartItem) {
+        return (cartItem.getQuantityBeforeOffer() > 1) ? (cartItem.getQuantityBeforeOffer()-1)*cartItem.getProduct().getUnitPrice() : cartItem.getQuantityBeforeOffer()*cartItem.getProduct().getUnitPrice();
     }
 
 

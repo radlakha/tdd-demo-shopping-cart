@@ -7,11 +7,11 @@ import java.util.Map;
 
 public class Cart {
     //List of items in the cart with respective unit quantity
-    Map<Product, CartItem> items;       
+    private Map<Product, CartItem> items;       
     
     //List of offers applicable to the cart
     // Map<String, Offer> cartOffers;
-    List<Offer> cartOffers;
+    private List<Offer> cartOffers;
 
 
     int quantity = 0;       //Total number of items in cart
@@ -33,11 +33,17 @@ public class Cart {
 
     public double getCartValue() {
 
-        double cartValue = this.items.values().stream().mapToInt(CartItem::getCartItemValue).sum();
-        //stream offer list and apply each offer to the cart
-        double discount = this.cartOffers.stream().mapToDouble(offer -> offer.getDiscountPercentage(this)).sum();
-        return cartValue - cartValue*discount/100;
+        //stream offer list and apply each offer to the cart and find the minimum value
+        // if cart has no offers, return the cart value before offer
+        if (this.cartOffers.isEmpty()) 
+            return this.getCartValueBeforeOffer();
+        else
+            return this.cartOffers.stream().mapToDouble(offer -> offer.getDiscountedValue(this)).min().getAsDouble();
         
+    }
+
+    public double getCartValueBeforeOffer() {
+        return this.items.values().stream().mapToInt(CartItem::getCartItemValue).sum();
     }
 
     public void AddItem(Product product, int quantity) {
