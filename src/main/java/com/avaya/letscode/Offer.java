@@ -34,6 +34,7 @@ public interface Offer {
     }
 
 
+
     public default int getAdjustedQuantity(CartItem cartItem) {
         return cartItem.getQuantityBeforeOffer();
     }

@@ -1,6 +1,6 @@
 package com.avaya.letscode;
 
-public class FIRST2OFF50Offer implements Offer {
+public class FIRST2OFF50Offer implements CartItemOffer {
     @Override
     public String getOfferName() {
         return "FIRST2OFF50";
@@ -8,7 +8,8 @@ public class FIRST2OFF50Offer implements Offer {
     
     @Override
     public int getDiscountedValue(CartItem cartItem) {
-        return (cartItem.getQuantityBeforeOffer() > 1) ? (cartItem.getQuantityBeforeOffer()-1)*cartItem.getProduct().getUnitPrice() : cartItem.getQuantityBeforeOffer()*cartItem.getProduct().getUnitPrice();
+        int quantityBeforeOffer = cartItem.getQuantityBeforeOffer();
+        return (quantityBeforeOffer > 1) ? (quantityBeforeOffer-1)*cartItem.getProduct().getUnitPrice() : quantityBeforeOffer*cartItem.getProduct().getUnitPrice();
     }
 
 
