@@ -8,34 +8,15 @@ public interface Offer {
                 return new FIRST2OFF50Offer();
         else if (offer.equals("CART5OFF"))
                 return new CART5OFFOffer();
+        else if (offer.equals("CART10OFF"))
+                return new CART10OFFOffer();
         else
-        return null;
+            return null;
     } 
 
 
     // Return name of the offer. This function will be implemented in all derived classes
-    public default String getOfferName() {
+    default String getOfferName() {
         return "";
-    }
-
-    // For Cart level offers return discount applicable for the offer. 
-    // This function will be implemented in all derived classes for cart level offers
-    public default double getDiscountedValue(Cart cart) {
-        // passsing the cart is to help offer to calculate the discount based on cart value and items in the cart
-        // do not use cart.getValue() here as it will cause infinite loop
-
-        return 0;
-    }
-
-    // For item level offers calculate item total based on offer.
-    // This function will be implemented in all derived classes
-    public default int getDiscountedValue(CartItem cartItem) {
-        return cartItem.getProduct().getUnitPrice() * cartItem.getQuantityBeforeOffer();
-    }
-
-
-
-    public default int getAdjustedQuantity(CartItem cartItem) {
-        return cartItem.getQuantityBeforeOffer();
     }
 }

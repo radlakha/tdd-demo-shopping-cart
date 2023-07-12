@@ -11,13 +11,13 @@ public class Cart {
     
     //List of offers applicable to the cart
     // Map<String, Offer> cartOffers;
-    private List<Offer> cartOffers;
+    private final List<CartOffer> offers;
 
     int quantity = 0;       //Total number of items in cart
 
     Cart(){
         this.items = new HashMap<>();
-        this.cartOffers = new ArrayList<>();
+        this.offers = new ArrayList<>();
     }
 
     public boolean isEmpty() {
@@ -39,29 +39,35 @@ public class Cart {
     }
 
     public void AddOffer(String offer) {
-        this.cartOffers.add(Offer.create(offer));
+        this.offers.add((CartOffer)Offer.create(offer));
     }
 
     public int getQuantity() {
+        // iterate through the items and get the total quantity
+        return this.items.values().stream().mapToInt(CartItem::getQuantity).sum();
+    }
+
+    public int getQuantityBeforeOffer() {
         return quantity;
     }
+
 
     public int getQuantity(Product product) {
         return this.items.containsKey(product) ? this.items.get(product).getQuantity() : 0;
     }
 
-    public double getCartValue() {
+    public double getValue() {
 
         //stream offer list and apply each offer to the cart and find the minimum value
         // if cart has no offers, return the cart value before offer
-        if (this.cartOffers.isEmpty()) 
-            return this.getCartValueBeforeOffer();
+        if (this.offers.isEmpty()) 
+            return this.getValueBeforeOffer();
         else
-            return this.cartOffers.stream().mapToDouble(offer -> offer.getDiscountedValue(this)).min().getAsDouble();
+            return this.offers.stream().mapToDouble(offer -> offer.getDiscountedValue(this)).min().getAsDouble();
         
     }
 
-    public double getCartValueBeforeOffer() {
-        return this.items.values().stream().mapToInt(CartItem::getCartItemValue).sum();
+    public double getValueBeforeOffer() {
+        return this.items.values().stream().mapToInt(CartItem::getValue).sum();
     }
 }
