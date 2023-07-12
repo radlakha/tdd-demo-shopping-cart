@@ -37,6 +37,4 @@ public class CartItem {
     public Product getProduct() {
         return this.product;
     }
-    }
-
 }
