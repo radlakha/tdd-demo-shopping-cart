@@ -119,6 +119,7 @@ public class TestingCart {
         testCart.AddItem(patanjaliSoap, 5,"FIRST2OFF50");
         Assert.assertEquals(6,testCart.getQuantity(doveSoap));
         Assert.assertEquals(5,testCart.getQuantity(patanjaliSoap));
+        Assert.assertEquals(11,testCart.getQuantity());
         Assert.assertEquals(300, testCart.getCartValue(),0);
     }
 
