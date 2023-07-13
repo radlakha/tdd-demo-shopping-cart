@@ -17,25 +17,24 @@ public class CartItem {
     }
 
     public int getQuantity() {
-        // if item has no offer, return the quantity
-        if (this.offer == null) {
-            return this.quantity;
-        }
-
-        // if item has offer, return the quantity based on offer
-        return (this.offer).getAdjustedQuantity(this.product, this.quantity);
+        // if item has no offer, return the quantity, else return the quantity based on offer
+        return (this.offer == null) ? this.quantity : ((CartItemOffer) this.offer).getAdjustedQuantity(this);
     }
 
-    public int getCartItemValue() {
-        
-        // if item has no offer, return the product unit price * quantity
-        if (this.offer == null) {
-            return this.product.getUnitPrice()*this.getQuantity();
-        }
-        
-        // if item has offer, return the item total based on offer
-        return (this.offer).getDiscountedValue(this.product, this.quantity);
-
+    private int getValueBeforeOffer() {
+        return this.product.getUnitPrice() * this.quantity;
     }
 
+    public int getValue() {
+        // if item has no offer, return the product unit price * quantity, else return the item total based on offer
+        return (this.offer != null) ? ((CartItemOffer) this.offer).getDiscountedValue(this) : getValueBeforeOffer();
+    }
+
+    public int getQuantityBeforeOffer() {
+        return this.quantity;
+    }
+
+    public Product getProduct() {
+        return this.product;
+    }
 }

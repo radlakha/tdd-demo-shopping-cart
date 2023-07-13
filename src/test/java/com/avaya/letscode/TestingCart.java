@@ -20,7 +20,7 @@ public class TestingCart {
     public void testAddToCart(){
         testCart.AddItem(new Product("Dove Soap", 50));
         Assert.assertEquals(1, testCart.getQuantity());
-        Assert.assertEquals(50, testCart.getCartValue(), 0.0);
+        Assert.assertEquals(50, testCart.getValue(), 0.0);
     }
     @Test
     public void testCartInUseIsNotEmpty(){
@@ -31,7 +31,7 @@ public class TestingCart {
     public void testAddMoreThanOneQuanity(){
         testCart.AddItem(new Product("Dove Soap", 50), 3);
         Assert.assertEquals(3, testCart.getQuantity());
-        Assert.assertEquals(150, testCart.getCartValue(), 0.0);
+        Assert.assertEquals(150, testCart.getValue(), 0.0);
     }
     @Test
     public void testAddMultipleProducts(){
@@ -58,7 +58,7 @@ public class TestingCart {
         testCart.AddItem(patanjaliSoap, 2);
         Assert.assertEquals(3,testCart.getQuantity(doveSoap));
         Assert.assertEquals(2,testCart.getQuantity(patanjaliSoap));
-        Assert.assertEquals(150, testCart.getCartValue(), 0.0);
+        Assert.assertEquals(150, testCart.getValue(), 0.0);
     }
     @Test
     public void testAddMultipleOfferToCart(){
@@ -69,7 +69,7 @@ public class TestingCart {
         testCart.AddItem(patanjaliSoap, 2);
         Assert.assertEquals(6,testCart.getQuantity(doveSoap));
         Assert.assertEquals(2,testCart.getQuantity(patanjaliSoap));
-        Assert.assertEquals(250, testCart.getCartValue(), 0.0);
+        Assert.assertEquals(250, testCart.getValue(), 0.0);
     }
     @Test
     public void testAddProductsWithDifferingUnitPriceToCart(){
@@ -82,14 +82,14 @@ public class TestingCart {
         Assert.assertEquals(3,testCart.getQuantity(doveSoapNew));
         Assert.assertEquals(3,testCart.getQuantity(doveSoapOld));
         Assert.assertEquals(2,testCart.getQuantity(patanjaliSoap));
-        Assert.assertEquals(230, testCart.getCartValue(), 0.0);
+        Assert.assertEquals(230, testCart.getValue(), 0.0);
     }
     @Test
     public void testAddProductsWithFirstNOnDiscountOffer(){
         Product patanjaliSoap = new Product("Patanjali Soap", 25);
         testCart.AddItem(patanjaliSoap, 5,"FIRST2OFF50");
         Assert.assertEquals(5,testCart.getQuantity(patanjaliSoap));
-        Assert.assertEquals(100, testCart.getCartValue(), 0.0);
+        Assert.assertEquals(100, testCart.getValue(), 0.0);
     }
     @Test
     // This test is to check offers designed for the discount on total cart value
@@ -104,7 +104,7 @@ public class TestingCart {
         Assert.assertEquals(10,testCart.getQuantity(doveSoap));
         Assert.assertEquals(10,testCart.getQuantity(patanjaliSoap));
         Assert.assertEquals(2,testCart.getQuantity(HerbalShampoo));
-        Assert.assertEquals(1021.25, testCart.getCartValue(),0);
+        Assert.assertEquals(1021.25, testCart.getValue(),0);
     }
 
     @Test
@@ -119,7 +119,31 @@ public class TestingCart {
         testCart.AddItem(patanjaliSoap, 5,"FIRST2OFF50");
         Assert.assertEquals(6,testCart.getQuantity(doveSoap));
         Assert.assertEquals(5,testCart.getQuantity(patanjaliSoap));
-        Assert.assertEquals(300, testCart.getCartValue(),0);
+        Assert.assertEquals(11,testCart.getQuantity());
+        Assert.assertEquals(300, testCart.getValue(),0);
+    }
+
+    @Test
+    // If more than one offer can be applied on a cart, then the offer which provides the maximum benefit to the customer should be applied
+    // GIVEN I have an empty cart
+    // WHEN I add 5 Dove Soaps with “Buy 2 Get 1 Free Offer” of Unit price INR 50 AND 5 Patanjali Soaps with “50% Discount On First 2 Offer” of Unit price 25 to the cart
+    // AND I add an Expensive Perfume with Unit Price INR 2500 to the cart
+    // AND I add a “5% Discount on cart value above INR 1000” offer on the cart
+    // AND I add a “10% Discount on cart value above INR 2000” offer on the cart
+    // THEN my cart shows quantity 6 for Dove Soap AND quantity 5 for Patanjali Soap AND quantity 1 for Expensive Perfume with total cart value INR 2520
+    public void testMultipleOffersOnCart(){
+        Product doveSoap = new Product("Dove Soap", 50);
+        testCart.AddItem(doveSoap, 5, "BUY2GET1");
+        Product patanjaliSoap = new Product("Patanjali Soap", 25);
+        testCart.AddItem(patanjaliSoap, 5,"FIRST2OFF50");
+        Product ExpensivePerfume = new Product("Channel 5", 2500);
+        testCart.AddItem(ExpensivePerfume, 1);
+        testCart.AddOffer("CART5OFF");
+        testCart.AddOffer("CART10OFF");
+        Assert.assertEquals(6,testCart.getQuantity(doveSoap));
+        Assert.assertEquals(5,testCart.getQuantity(patanjaliSoap));
+        Assert.assertEquals(12,testCart.getQuantity());
+        Assert.assertEquals(2520, testCart.getValue(),0);
     }
 
     
