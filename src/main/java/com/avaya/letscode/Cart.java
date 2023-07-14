@@ -60,10 +60,7 @@ public class Cart {
 
         //stream offer list and apply each offer to the cart and find the minimum value
         // if cart has no offers, return the cart value before offer
-        if (this.offers.isEmpty()) 
-            return this.getValueBeforeOffer();
-        else
-            return this.offers.stream().mapToDouble(offer -> offer.getDiscountedValue(this)).min().getAsDouble();
+        return this.offers.isEmpty() ? this.getValueBeforeOffer() : this.offers.stream().mapToDouble(offer -> offer.getDiscountedValue(this)).min().getAsDouble();
         
     }
 
