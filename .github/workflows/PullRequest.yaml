@@ -36,5 +36,3 @@ jobs:
         name: Test Results
         working_directory: target/surefire-reports
         fail_on_failure: true
-
-    ```
