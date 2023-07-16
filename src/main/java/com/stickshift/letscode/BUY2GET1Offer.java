@@ -1,4 +1,4 @@
-package com.avaya.letscode;
+package com.stickshift.letscode;
 
 public class BUY2GET1Offer implements CartItemOffer {
     @Override

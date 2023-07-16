@@ -1,4 +1,4 @@
-package com.avaya.letscode;
+package com.stickshift.letscode;
 
 public class CartItem {
     private final Product product;

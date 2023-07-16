@@ -1,4 +1,4 @@
-package com.avaya.letscode;
+package com.stickshift.letscode;
 
 public class CART5OFFOffer implements CartOffer {
     @Override
