@@ -1,4 +1,4 @@
-package com.avaya.letscode;
+package com.stickshift.letscode;
 
 public interface Offer {
     public static Offer create(String offer) {

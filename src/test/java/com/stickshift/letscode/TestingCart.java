@@ -1,4 +1,4 @@
-package com.avaya.letscode;
+package com.stickshift.letscode;
 
 import org.junit.After;
 import org.junit.Assert;

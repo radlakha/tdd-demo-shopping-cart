@@ -1,4 +1,4 @@
-package com.avaya.letscode;
+package com.stickshift.letscode;
 
 public interface CartItemOffer extends Offer {
     // For item level offers calculate item total based on offer.

@@ -1,4 +1,4 @@
-package com.avaya.letscode;
+package com.stickshift.letscode;
 
 public interface CartOffer extends Offer {
     // For Cart level offers return discount applicable for the offer. 

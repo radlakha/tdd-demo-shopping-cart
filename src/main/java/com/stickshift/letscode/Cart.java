@@ -1,4 +1,4 @@
-package com.avaya.letscode;
+package com.stickshift.letscode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
